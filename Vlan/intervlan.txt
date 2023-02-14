@@ -1,0 +1,7 @@
+Router(config)#subinterface - > int f0/0.1
+Router(config-subif)#kon vlan chai -> encapsulation dot1q 2
+Router(config-subif)#oi vlan er default gateway -> ip address 192.168.10.1 255.255.255.0
+Router(config-subif)#ip dhcp pool r1
+Router(dhcp-config)#network 192.168.10.0 255.255.255.0
+Router(dhcp-config)#default-router 192.168.10.1
+Router(dhcp-config)#exit

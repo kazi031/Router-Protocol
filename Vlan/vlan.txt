@@ -1,0 +1,133 @@
+vlan 2
+name ****
+exit
+---vlan create and naming
+
+** grouping the interface
+pc 1& 2 under vlan2
+pc 3&4 under vlan3
+pc 5&6 under vlan4
+
+----
+-int range f0/1-2(pasha pasha port hole)
+-switchport mode access(interface ta accesslink dey jekeno ekta lan er shathe)
+-switchport access vlan 2(kon vlan er under)
+-exit
+
+-do show vlan(ki ki vlan ache)
+
+switch0
+switchport mode trunk
+do copy running-config startup-config
+
+
+
+vtp server:
+serverswitch:
+vtpserver(config)#vtp domain mist
+Changing VTP domain name from NULL to mist
+vtpserver(config)#vtp pass 1234
+Setting device VLAN database password to 1234
+vtpserver(config)#vtp mode server
+Device mode already VTP SERVER.
+vtpserver(config)#vlan 2
+vtpserver(config-vlan)#name cse
+vtpserver(config-vlan)#vlan 3
+vtpserver(config-vlan)#eece
+                        ^
+% Invalid input detected at '^' marker.
+	
+vtpserver(config-vlan)#name eece
+vtpserver(config-vlan)#exit
+vtpserver(config)#int range f0/1-2
+vtpserver(config-if-range)#switchport mode trunk
+
+
+vtpserver(config-if-range)#
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/1, changed state to down
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/1, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/2, changed state to down
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/2, changed state to up
+
+vtpserver(config-if-range)#exit
+vtpserver(config)#do copy running-config startup-config
+Destination filename [startup-config]? 
+Building configuration...
+[OK]
+
+clinent1:
+Switch(config)#hostname client1
+client1(config)#vtp ver 2
+client1(config)#vtp domain mist
+Domain name already set to mist.
+client1(config)#vtp pass 1234
+Setting device VLAN database password to 1234
+client1(config)#vtp mode client
+Setting device to VTP CLIENT mode.
+client1(config)#int range f0/4-5
+client1(config-if-range)#switchport mode access
+client1(config-if-range)#switchport access vlan 5
+client1(config-if-range)#int f0/3
+client1(config-if)#switchport mode access
+client1(config-if)#switchport access vlan 3
+client1(config-if)#int f0/2
+client1(config-if)#switchport mode access
+client1(config-if)#switchport access vlan 6
+client1(config-if)#exit
+client1(config)#int f0/1
+client1(config-if)#switchport mode trunk
+client1(config-if)#exit
+
+client2:
+Switch(config)#vtp ver 2
+Switch(config)#vtp domain mist
+Domain name already set to mist.
+Switch(config)#vtp pass 1234
+Setting device VLAN database password to 1234
+Switch(config)#vtp mode client
+Setting device to VTP CLIENT mode.
+Switch(config)#int range f0/3-4
+Switch(config-if-range)#seitchport mode access
+                         ^
+% Invalid input detected at '^' marker.
+	
+Switch(config-if-range)#switchport mode access
+Switch(config-if-range)#exit
+Switch(config)#int f0/3
+Switch(config-if)#switchport mode access
+Switch(config-if)#switchport access vlan 4
+Switch(config-if)#int f0/4
+Switch(config-if)#switchport mode access
+Switch(config-if)#switchport access vlan 3
+Switch(config-if)#int range f0/5-6
+Switch(config-if-range)#switchport mode access
+Switch(config-if-range)#switchport access vlan 2
+Switch(config-if-range)#int range f0/1-2
+Switch(config-if-range)#switchport mode trunk
+
+Switch(config-if-range)#
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/1, changed state to down
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/1, changed state to up
+
+Switch(config-if-range)#exit
+
+client3:
+
+Switch(config)#vtp ver 2
+Switch(config)#vtp domain mist
+Domain name already set to mist.
+Switch(config)#vtp pass 1234
+Setting device VLAN database password to 1234
+Switch(config)#vtp mode client
+Setting device to VTP CLIENT mode.
+Switch(config)#
+Switch(config)#int f0/2
+Switch(config-if)#switchport mode access
+Switch(config-if)#switchport access vlan 5
+Switch(config-if)#int f0/1
+Switch(config-if)#switchport mode trunk
+Switch(config-if)#exit

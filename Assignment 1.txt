@@ -1,0 +1,74 @@
+enable 
+config t
+hostname EEE(hostname change korar jonno)
+password commands:
+line con 0
+pass eee
+login
+exit
+
+fast ethernet port:
+int f0/0
+ip address 192.168.10.1 255.255.255.0
+no shutdown(activates)
+
+exit
+
+serial port:
+int s0/0/0
+ip address 192.168.20.1 255.255.255.0
+clock rate 64000
+no shutdown
+
+
+Static routing:
+ip route dest_ip subnet masking next_hop(next router ip)
+do copy running-config startup-config
+
+RIP
+
+router rip
+version 2
+network ip1
+network ip2
+no auto-summary
+exit
+
+EIGRP
+
+router eigrp 10; assosiated number
+eigrp router-id 1.1.1.1 ;optional
+network ip1 0.0.0.255(wild card mask)(subnet er ulta)
+network ip2 0.0.0.255
+no auto-summary
+exit
+
+do show ip eigrp neighbors
+do show ip eigrp topology
+do show ip route
+
+to remove:
+
+no router rip
+no router eigrp 10
+
+ospf:
+router ospf 1
+router-id 1.1.1.1
+network 192.168.10.0 0.0.0.255 area 0
+network 192.168.20.0 0.0.0.255 area 1
+exit
+
+
+DHCP:
+ip dhcp pool CSE
+network 192.168.10.0 255.255.255.0
+default-route 192.168.10.1
+exit
+
+to reserve some ip address :
+ip dhcp excluded-address 192.168.10.2 192.168.10.22 (2-22 reseved thakbe)
+
+
+
+

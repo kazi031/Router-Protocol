@@ -1,0 +1,31 @@
+**host or network choose kore limitation diye dite pari or kichu service block kore dite pari.
+ACL config rule -> ACL per interface, per protocol, per direction is allowed.(1ACL allowed)
+1ta path e ekta ACL apply korte parbo.
+
+**ACL gula globally create kore assing korte hobe fixed interface e.
+
+** ACL data dhukte or ber hote resist korbe.
+
+**ACL -> Standard(port ke permit or deny korbe)
+	 Extended(protocol ke permit or deny korbe)
+
+Commands >>
+
+>>access-list 10(Range: 1–99 and 1300–1999) permit 192.168.10.3
+**data in in f0/1 so,if we want to have in data
+>>int f0/1                          >> int f0/0
+>>ip access-group 10 in             >> ip access-group 10 out
+>> do show access-list
+>>no access-list 10(delete)
+
+deny
+>>access-list 32 deny 192.168.10.3
+>>access-list 32 permit any
+>>int f0/0
+>>ip access-group 10 out
+
+>>access-list 32 deny 192.168.10.0(Whole network deny)
+
+
+
+
